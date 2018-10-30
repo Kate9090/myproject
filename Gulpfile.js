@@ -4,7 +4,7 @@ var gulp = require('gulp'),
   uglify = require('gulp-uglify'),
   sass = require('gulp-sass'),
   pug = require('gulp-pug'),
-  sourseMaps = require('gulp-sourcemaps'),
+  sourceMaps = require('gulp-sourcemaps'),
   rigger = require('gulp-rigger'),
   cssMin = require('gulp-minify-css'),
   rimRaf = require('rimraf'),
@@ -19,7 +19,7 @@ var path = {
   },
   src: {
     html: 'dev/*.pug',
-    js: 'dev/js/maim.js',
+    js: 'dev/js/main.js',
     style: 'dev/sass/main.scss'
   },
   watch: {
@@ -42,7 +42,7 @@ gulp.task("webserver", function (){
 });
 
 gulp.task('pug', function buildHTML() {
-  return gulp.src('dev/template/pug/**/*.pug')
+  return gulp.src('dev/*.pug')
 
     .pipe(pug({
       pretty: true
@@ -52,23 +52,23 @@ gulp.task('pug', function buildHTML() {
     .pipe(reload({stream: true}));
 });
 
-gulp.task('js:build', function (){
+gulp.task('js:build', function(){
   gulp.src(path.src.js)
   .pipe(rigger())
-  .pipe(sourseMaps.init)
+  .pipe(sourceMaps.init())
   .pipe(uglify())
-  .pipe(sourseMaps.write())
+  .pipe(sourceMaps.write())
   .pipe(gulp.dest(path.build.js))
   .pipe(reload({stream: true}));
 });
 
 gulp.task('style', function() {
     gulp.src('dev/sass/**/*.scss')
-      .pipe(sourseMaps.init)
-      .pipe(sass().on('error', sass.logError))
+      .pipe(sourceMaps.init())
+      .pipe(sass())
       .pipe(preFixer())
       .pipe(cssMin())
-      .pipe(sourseMaps.write())
+      .pipe(sourceMaps.write())
       .pipe(gulp.dest('public/css/'))
       .pipe(reload({stream: true}));
 });
@@ -95,8 +95,4 @@ gulp.task('clean', function(callback) {
   rimRaf(path.clean, callback);
 });
 
-gulp.task('default', [
-  'build',
-  'webserver',
-  'watch'
-]);
+gulp.task('default', ['build','webserver','watch']);
