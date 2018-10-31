@@ -10,7 +10,7 @@ window.onload = function () {
       setTimeout(function(){
 
         preloader.classList.add('slow');
-      }, 5000);
+      }, 3000);
 
 
 };
