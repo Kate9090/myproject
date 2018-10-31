@@ -9,26 +9,49 @@ var gulp = require('gulp'),
   cssMin = require('gulp-minify-css'),
   rimRaf = require('rimraf'),
   browserSync = require('browser-sync'),
-  reload = browserSync.reload;
+  reload = browserSync.reload,
+  browserify = require('browserify'),
+  // babelify = require('babelify'),
+  // react = require('gulp-react'),
+  source = require('vinyl-source-stream'),
+  imagemin = require('gulp-imagemin');
+
 
 var path = {
   build: {
     html: 'public/',
     js: 'public/js/',
-    css: 'public/css/'
+    css: 'public/css/',
+    img: 'public/img/'
   },
   src: {
     html: 'dev/*.pug',
     js: 'dev/js/main.js',
-    style: 'dev/sass/main.scss'
+    style: 'dev/sass/main.scss',
+    img: 'dev/img/*'
   },
   watch: {
     html: 'dev/template/**/*.pug',
     js: 'dev/js/**/*.js',
-    style: 'dev/sass/**/*.scss'
+    style: 'dev/sass/**/*.scss',
+    img: 'dev/img/*'
   },
   clean: './public'
 }
+
+gulp.task('component', function () {
+  return browserify({entries: './app.jsx', extensions: ['.jsx'], debug: true})
+      .transform('babelify', {presets: ['es2015', 'react']})
+      .bundle()
+      .pipe(source('bundle.js'))
+      .pipe(gulp.dest('dist'));
+});
+
+gulp.task('image', () =>
+    gulp.src(path.src.img)
+        .pipe(imagemin())
+        .pipe(gulp.dest(path.build.img))
+);
 
 gulp.task("webserver", function (){
   browserSync({
@@ -63,7 +86,7 @@ gulp.task('js:build', function(){
 });
 
 gulp.task('style', function() {
-    gulp.src('dev/sass/**/*.scss')
+    gulp.src('dev/sass/main.scss')
       .pipe(sourceMaps.init())
       .pipe(sass())
       .pipe(preFixer())
@@ -76,18 +99,29 @@ gulp.task('style', function() {
 gulp.task('build', [
   'pug',
   'js:build',
-  'style'
+  'style',
+  'image'
 ]);
 
+// gulp.task('watch', ['component'], function () {
+//   gulp.watch('*.jsx', ['component']);
+// });
+
 gulp.task('watch', function (){
+  // watch([path.watch.js], function(ev, callback){
+  //   gulp.watch('*.jsx', ['component']);
+  // });
   watch([path.watch.js], function(ev, callback){
     gulp.start('js:build');
   });
   watch([path.watch.html], function(ev, callback){
-    gulp.start('html:build');
+    gulp.start('pug');
   });
   watch([path.watch.style], function(ev, callback){
-    gulp.start('style:build');
+    gulp.start('style');
+  });
+  watch([path.watch.img], function(ev, callback){
+    gulp.start('image');
   });
 })
 
