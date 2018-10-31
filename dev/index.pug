@@ -3,8 +3,9 @@ html
     title KEremina #{mypro}
     link(rel="stylesheet", href="css/main.css")
     block scripts
-      script(src='/main.js')
+      script(src='js/main.js')
   body
+    include template/preloader.pug
     block content
       .parallax
         .parallax__layer.parallax__layer--back
