@@ -1,5 +1,5 @@
 // import 'partials/preloader.js'
-// var $ = require("jquery");
+//  require("jquery");
 
 window.onload = function () {
   var preloader = document.getElementById('p-prldr'),
@@ -22,5 +22,21 @@ window.onload = function () {
       lists.classList.remove('drop');
       lists.classList.add('disapear');
     }
+
+
+
+  document.querySelector('.footer').addEventListener('mousemove', function (evt) {
+    var phone = document.getElementById('phone')
+    if (phone) {
+      phone.onmouseenter =function(){
+        phone.innerHTML = "+7-985-201-15-10"
+      }
+
+      phone.onmouseleave = function(){
+        phone.innerHTML = "+7(985)2***0"
+      }
+    }
+  })
+
 };
 
