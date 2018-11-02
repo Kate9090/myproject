@@ -8,13 +8,13 @@ body {
 .parallax {
   perspective: 1px;
   height: 90vh;
-  max-height: 100vh;
+  max-height: 90vh;
   overflow-x: hidden;
   overflow-y: auto;
   font-size: 200%;
   background: linear-gradient(to bottom,#ccb0b1 90%,#c7a8aa);
-
 }
+
 .title {
     position: absolute;
     left: 50%;
@@ -23,13 +23,15 @@ body {
     transform: translate(-50%, -50%);
   font-size: 14px;
 }
+
 .parallax__layer {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0px;
-  }
+}
+
 .parallax__layer {
     padding: 100vh 0;
 }
