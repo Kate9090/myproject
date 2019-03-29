@@ -5,27 +5,25 @@ window.onload = function () {
   var preloader = document.getElementById('p-prldr'),
       svg_anm   = document.querySelector('.anm');
 
-      svg_anm.classList.add('show');
+  svg_anm.classList.add('show');
 
-      setTimeout(function(){
+  setTimeout(function(){
 
-        preloader.classList.add('slow');
-      }, 3000);
+    preloader.classList.add('slow');
+  }, 3000);
 
 //dropping menu
-    var lists= document.querySelector('.menu__lists');
-      setTimeout(function(){
-        lists.classList.add('drop');
-      }, 3000);
+  var lists= document.querySelector('.menu__lists');
+    setTimeout(function(){
+      lists.classList.add('drop');
+    }, 3000);
 
-    if (window.pageYOffset > 20) {
-      lists.classList.remove('drop');
-      lists.classList.add('disapear');
-    }
+  if (window.pageYOffset > 20) {
+    lists.classList.remove('drop');
+    lists.classList.add('disapear');
+  }
 
-
-
-  document.querySelector('.footer').addEventListener('mousemove', function (evt) {
+  document.querySelector('.footer').addEventListener('mousemove', function () {
     var phone = document.getElementById('phone')
     if (phone) {
       phone.onmouseenter =function(){
@@ -37,6 +35,5 @@ window.onload = function () {
       }
     }
   })
-
 };
 
